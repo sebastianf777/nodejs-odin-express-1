@@ -41,7 +41,7 @@ exports.book_list = function(req, res, next) {
     });
 
 };
-// Display detail page for a specific book.
+
 // Display detail page for a specific book.
 exports.book_detail = (req, res, next) => {
   async.parallel(
