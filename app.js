@@ -7,17 +7,13 @@ var logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog'); //Import routes for "catalog" area of site
-var app = express();
+const compression = require('compression');
+const helmet = require('helmet');
 
+const app = express();
+app.use(helmet());
 // Set up mongoose connection
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-// const uri = "mongodb+srv://m001-student:<password>@sandbox.x351nnc.mongodb.net/?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
+
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb+srv://m001-student:m001-mongodb-basics@sandbox.x351nnc.mongodb.net/?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true });
@@ -32,6 +28,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(compression()); //Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
